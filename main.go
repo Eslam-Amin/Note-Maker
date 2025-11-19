@@ -15,6 +15,11 @@ type saver interface {
 }
 
 
+type displayer interface {
+	Display()
+}
+
+
 func main (){
 	title, content := getNoteData()
 	userNote, err :=note.New(title, content)
