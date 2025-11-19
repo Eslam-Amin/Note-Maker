@@ -1,10 +1,15 @@
 package note
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
+	"strings"
 	"time"
 )
+
+const NOTE_FILE_NAME = "notes.txt"
 
 type Note struct{
 	title			string
@@ -14,6 +19,19 @@ type Note struct{
 
 func (note *Note) DisplayNote(){
 	fmt.Printf("Your note titled: %v has the following content:\n\n %v \n\n", note.title, note.content)
+}
+
+func (note Note) Save()error{
+	fileName := strings.ReplaceAll(note.title, " ", "_")
+	fileName = strings.ToLower(fileName)
+	jsonContent, err := json.Marshal(note)
+	
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile(fileName, jsonContent, 0644)
+	
 }
 
 
