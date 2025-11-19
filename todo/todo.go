@@ -15,7 +15,7 @@ type Todo struct{
 }
 
 
-func (todo Todo) DisplayTodo(){
+func (todo Todo) Display(){
 	fmt.Println(todo)
 }
 

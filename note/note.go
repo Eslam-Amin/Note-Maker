@@ -16,7 +16,7 @@ type Note struct{
 	CreatedAt time.Time `json:"created_at"`
 }
 
-func (note *Note) DisplayNote(){
+func (note *Note) Display(){
 	fmt.Printf("Your note titled: %v has the following content:\n\n %v \n\n", note.Title, note.Content)
 }
 
