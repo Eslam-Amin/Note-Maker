@@ -38,19 +38,19 @@ func main (){
 		return
 	}
 
-	todo.DisplayTodo()
+	err = outputData(todo)
 	
-	err = saveData(todo)
+	if err != nil {
+		return
+	}
+	outputData(userNote)
+	
+}
 
-	if err != nil {
-		return
-	}
-	fmt.Println("Saving the todo succeeded!")
-	userNote.DisplayNote()
-	err = saveData(userNote)
-	if err != nil {
-		return
-	}
+
+func outputData (data outputtable)error{
+	data.Display()
+	return saveData(data)
 }
 
 func saveData(data saver) error{
