@@ -9,7 +9,6 @@ import (
 	"time"
 )
 
-const NOTE_FILE_NAME = "notes.txt"
 
 type Note struct{
 	title			string
