@@ -1,6 +1,7 @@
 package note
 
 import (
+	"errors"
 	"fmt"
 	"time"
 )
@@ -17,7 +18,9 @@ func (note *Note) DisplayNote(){
 
 
 func New (title, content string) (*Note, error){
-	
+	if title == "" || content == "" {
+		return nil, errors.New("title and content are required")
+	}
 
 	return &Note{
 		title: title,
