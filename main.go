@@ -19,6 +19,10 @@ type displayer interface {
 	Display()
 }
 
+type outputtable interface {
+	displayer
+	saver
+}
 
 func main (){
 	title, content := getNoteData()
