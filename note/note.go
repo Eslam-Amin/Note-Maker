@@ -5,10 +5,11 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"strings"
 	"time"
 )
 
+var Notes []Note
+const NOTES_FILE = "notes.json"
 
 type Note struct{
 	Title			string `json:"title"`
@@ -20,19 +21,45 @@ func (note *Note) Display(){
 	fmt.Printf("Your note titled: %v has the following content:\n\n %v \n\n", note.Title, note.Content)
 }
 
-func (note Note) Save()error{
-	fileName := strings.ReplaceAll(note.Title, " ", "_")
-	fileName = strings.ToLower(fileName+".json")
-	jsonContent, err := json.Marshal(note)
-	
+func (note Note) Save() error{
+	fmt.Println("NOTES #0: ",Notes)
+	listOfNotes, err := loadNotes()
 	if err != nil {
 		return err
 	}
-
-	return os.WriteFile(fileName, jsonContent, 0644)
 	
+	listOfNotes = append(listOfNotes, note)
+	fmt.Println("list of notes: ",listOfNotes)
+	Notes = listOfNotes
+	fmt.Println("NOTES #1: ",Notes)
+	jsonContent, err := json.Marshal(listOfNotes)
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(NOTES_FILE, jsonContent, 0644)
 }
 
+func loadNotes ()([]Note, error){
+	var list []Note
+	if len(Notes) > 0 {
+		return Notes, nil
+	}
+	data, err := os.ReadFile(NOTES_FILE)
+	if err != nil {
+		return nil, err
+	}
+	if len(data) ==0 {
+		Notes = list
+		return list, nil
+	}
+	err = json.Unmarshal(data, &list)
+	if err != nil {
+		return nil, err
+	}
+
+	Notes = list
+	return list, nil
+}
 
 func New (title, content string) (*Note, error){
 	if title == "" || content == "" {
