@@ -61,7 +61,6 @@ func saveData(data saver) error{
 	}
 	fmt.Println("Saving the note succeeded!")
 
-	data.Save()
 	return nil
 }
 
