@@ -22,16 +22,13 @@ func (note *Note) Display(){
 }
 
 func (note Note) Save() error{
-	fmt.Println("NOTES #0: ",Notes)
 	listOfNotes, err := loadNotes()
 	if err != nil {
 		return err
 	}
 	
 	listOfNotes = append(listOfNotes, note)
-	fmt.Println("list of notes: ",listOfNotes)
 	Notes = listOfNotes
-	fmt.Println("NOTES #1: ",Notes)
 	jsonContent, err := json.Marshal(listOfNotes)
 	if err != nil {
 		return err
@@ -49,7 +46,6 @@ func loadNotes ()([]Note, error){
 		return nil, err
 	}
 	if len(data) ==0 {
-		Notes = list
 		return list, nil
 	}
 	err = json.Unmarshal(data, &list)
@@ -57,7 +53,6 @@ func loadNotes ()([]Note, error){
 		return nil, err
 	}
 
-	Notes = list
 	return list, nil
 }
 
